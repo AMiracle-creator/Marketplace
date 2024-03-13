@@ -1,0 +1,50 @@
+//
+//  RegestrationPresenter.swift
+//  Marketplace
+//
+//  Created by Амир Гайнуллин on 07.03.2024.
+//
+
+import Foundation
+import UIKit
+
+protocol RegistrationViewInput: AnyObject {
+    func updateView(alertManager: AlertManager, error: Error)
+}
+
+protocol RegistrationViewOutput: AnyObject {
+    func didTapSignUp(username: String, email: String, password: String)
+    func didTapSignIn()
+}
+
+class RegistrationPresenter: RegistrationViewOutput {
+    weak var view: RegistrationViewInput?
+    let authService: AuthServiceProtocol?
+    let router: RegistrationRouterProtocol?
+    var alertManager: AlertManager?
+    
+    init(authService: AuthServiceProtocol, alertManager: AlertManager, router: RegistrationRouterProtocol) {
+        self.router = router
+        self.authService = authService
+        self.alertManager = alertManager
+    }
+    
+    // MARK: - MainViewOutput
+    func didTapSignUp(username: String, email: String, password: String) {
+        authService?.signUp(username: username, email: email, password: password) { [weak self] result in
+            guard let self = self else { return }
+            guard let alertManager = alertManager else { return }
+            
+            switch result {
+            case .success(_):
+                self.router?.presentMainScreen()
+            case .failure(let error):
+                self.view?.updateView(alertManager: alertManager, error: error)
+            }
+        }
+    }
+    
+    func didTapSignIn() {
+        self.router?.presentLoginScreen()
+    }
+}
