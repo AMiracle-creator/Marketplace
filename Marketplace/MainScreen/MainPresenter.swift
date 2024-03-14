@@ -36,7 +36,14 @@ class MainViewPresenter: MainViewOutput {
     }
     
     func viewDidSelectItem(_ item: ItemMain) {
-        // TODO: In
+        switch item {
+        case .publications(let publication):
+            router?.presentDetailView(with: publication)
+        case .category(let category):
+            print("Selected category: \(category.name)")
+        case .loading, .error:
+            break
+        }
     }
     
     // MARK: Privat methods

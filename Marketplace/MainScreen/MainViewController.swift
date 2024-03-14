@@ -21,12 +21,14 @@ class MainViewController: UIViewController {
     private lazy var dataSource: DataSource = configureDataSource()
     
     // MARK: - UI Components
+    
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .mainScreen)
         collectionView.register(PublicationCollectionViewCell.self, forCellWithReuseIdentifier: "PublicationCollectionViewCell")
         collectionView.register(HorizontalMenuCollectionViewCell.self, forCellWithReuseIdentifier: "HorizontalMenuCollectionViewCell")
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -108,5 +110,13 @@ extension MainViewController: MainViewInput {
             snapshot.appendItems(section.items, toSection: section)
         }
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+extension MainViewController: UICollectionViewDelegate  {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+            
+        presenter.viewDidSelectItem(item)
     }
 }

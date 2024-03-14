@@ -23,9 +23,7 @@ class RegistrationController: UIViewController {
     
     private let termsTextView: UITextView = {
         let attributedString = NSMutableAttributedString(string: "Создовая аккаунт, Вы соглашаетесь с нашей политикой конфиденциальности и условиями пользования")
-        
         attributedString.addAttribute(.link, value: "privacy://privacyPolicy", range: (attributedString.string as NSString).range(of: "политикой конфиденциальности"))
-        
         attributedString.addAttribute(.link, value: "terms://termsAndConditions", range: (attributedString.string as NSString).range(of: "условиями пользования"))
         
         let textView = UITextView()
@@ -38,7 +36,6 @@ class RegistrationController: UIViewController {
         textView.delaysContentTouches = false
         textView.isScrollEnabled = false
         textView.textAlignment = .center
-
         return textView
     }()
     

@@ -6,3 +6,28 @@
 //
 
 import Foundation
+
+protocol PublicationDetailViewInput: AnyObject {
+    func updateView(with publicastion: Publication)
+}
+
+protocol PublicationDetailViewOutput: AnyObject {
+    func viewDidLoad()
+}
+
+class PublicationDetailPresenter: PublicationDetailViewOutput {
+    weak var view: PublicationDetailViewInput?
+    let router: PublicationDetailRouterProtocol?
+    let publication: Publication
+    
+    init(router: PublicationDetailRouterProtocol, publication: Publication) {
+        self.router = router
+        self.publication = publication
+    }
+    
+    // MARK: - MainViewOutput
+    
+    func viewDidLoad() {
+        view?.updateView(with: self.publication)
+    }
+}

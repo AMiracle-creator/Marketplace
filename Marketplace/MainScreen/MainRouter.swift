@@ -14,10 +14,13 @@ protocol MainRouterProtocol: AnyObject {
 
 class MainRouter: MainRouterProtocol {
     weak var transitionHandler: UIViewController?
-//    private let publicationDetailAssembly =
+    private let publicationDetailAssembly = PublicationDetailAssembly()
     
     
     func presentDetailView(with publication: Publication) {
-        print("123")
+        if let transitionHandler = transitionHandler {
+            let detailViewController = publicationDetailAssembly.assemble(publication: publication)
+            transitionHandler.navigationController?.pushViewController(detailViewController, animated: true)
+        }
     }
 }

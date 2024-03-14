@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import UIKit
+
+protocol PublicationDetailRouterProtocol {
+    func dismissView()
+}
+
+class PublicationDetailRouter: PublicationDetailRouterProtocol {
+    weak var transitionHandler: UIViewController?
+    
+    func dismissView() {
+        transitionHandler?.dismiss(animated: true, completion: nil)
+    }
+}
