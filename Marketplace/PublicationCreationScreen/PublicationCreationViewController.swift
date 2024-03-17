@@ -9,21 +9,35 @@ import UIKit
 import SnapKit
 
 class PublicationCreationViewController: UIViewController {
-    var publicationCreationPresenter: PublicationCreationPresenter!
+    
+    var presenter: PublicationCreationViewOutput
+    
     // MARK: - UI Components
     private let imageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleToFill
         image.isUserInteractionEnabled = true
-        image.image = UIImage(named: "dog")
+        image.image = UIImage(named: "placeholder")
         image.layer.cornerRadius = 10
         image.clipsToBounds = true
         return image
     }()
     
     private let titleField = CustomTextField(fieldType: .title)
-    private let descriptionFiled = CustomTextField(fieldType: .description)
     private let priceField = CustomTextField(fieldType: .price)
+    
+    private let placeHolder = "Описание"
+    
+    private let descriptionField: UITextView = {
+        let textView = UITextView()
+        textView.textAlignment = .left
+        textView.textColor = .lightGray
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.backgroundColor = .secondarySystemBackground
+        textView.layer.cornerRadius = 10
+        textView.textContainerInset = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 8)
+        return textView
+    }()
     
     private let addPublicationButton = CustomButton(title: "Добавить обьявление", hasBackground: true, fontSize: .medium)
     
@@ -39,6 +53,16 @@ class PublicationCreationViewController: UIViewController {
     }
 
     // MARK: - LifeCycle
+    
+    init(presenter: PublicationCreationViewOutput) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -55,9 +79,12 @@ class PublicationCreationViewController: UIViewController {
     private func setupUI() {
         view.addSubview(imageView)
         view.addSubview(titleField)
-        view.addSubview(descriptionFiled)
+        view.addSubview(descriptionField)
         view.addSubview(priceField)
         view.addSubview(addPublicationButton)
+        
+        descriptionField.delegate = self
+        descriptionField.text = placeHolder
         
         imageView.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview().inset(UIConstants.bigOffset)
@@ -71,26 +98,31 @@ class PublicationCreationViewController: UIViewController {
             $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
         }
         
-        descriptionFiled.snp.makeConstraints {
+        priceField.snp.makeConstraints {
             $0.top.equalTo(titleField.snp.bottom).offset(UIConstants.bigOffset)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(UIConstants.customTextFieldHeight)
             $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
         }
         
-        priceField.snp.makeConstraints {
-            $0.top.equalTo(descriptionFiled.snp.bottom).offset(UIConstants.bigOffset)
+        descriptionField.snp.makeConstraints {
+            $0.top.equalTo(priceField.snp.bottom).offset(UIConstants.bigOffset)
+            $0.leading.trailing.equalToSuperview().inset(UIConstants.bigOffset)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(UIConstants.customTextFieldHeight)
-            $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
+            $0.height.equalTo(110)
+            $0.width.equalTo(priceField.snp.width)
         }
         
         addPublicationButton.snp.makeConstraints {
-            $0.top.equalTo(priceField.snp.bottom).offset(UIConstants.bigOffset)
+            $0.top.equalTo(descriptionField.snp.bottom).offset(UIConstants.bigOffset)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(UIConstants.customTextFieldHeight)
             $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     // MARK: - Selectors
@@ -104,13 +136,16 @@ class PublicationCreationViewController: UIViewController {
     @objc private func didTapAddPublication() {
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.15) else { return }
         
-        let publication = Publication(userID: publicationCreationPresenter.marketplaceUser!.id,
+        guard let currentUser = presenter.marketplaceUser else { return }
+        
+        let publication = Publication(userID: currentUser.id,
+                                      username: currentUser.username,
                                       title: titleField.text ?? "Не указано",
-                                      description: descriptionFiled.text ?? "Не указано",
+                                      description: descriptionField.text ?? "Не указано",
                                       price: priceField.text ?? "Не указано",
                                       createdAt: Date())
 
-        publicationCreationPresenter.createPublicationButtonPressed(publication: publication, image: imageData)
+        presenter.createPublicationButtonPressed(publication: publication, image: imageData)
     }
 }
 
@@ -129,14 +164,32 @@ extension PublicationCreationViewController: UIImagePickerControllerDelegate, UI
     }
 }
 
-extension PublicationCreationViewController: PublicationCreationViewProtocol {
-    func updateState(isCreated state: Bool) {
-        if state == true {
-            publicationCreationPresenter.router?.dismissView()
-        }
+extension PublicationCreationViewController: PublicationCreationViewInput {
+    func updateState() {
+        print("Loading...")
     }
     
     func failure(error: Error) {
         print(error.localizedDescription)
+    }
+}
+
+extension PublicationCreationViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if (textView.text == placeHolder && descriptionField.textColor == .lightGray) {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        
+        textView.becomeFirstResponder()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            textView.text = placeHolder
+            textView.textColor = .lightGray
+        }
+        
+        textView.resignFirstResponder()
     }
 }

@@ -15,10 +15,6 @@ protocol PublicationCreationRouterProtocol {
 class PublicationCreationRouter: PublicationCreationRouterProtocol {
     weak var transitionHandler: UIViewController?
     
-    init(transitionHandler: UIViewController) {
-        self.transitionHandler = transitionHandler
-    }
-    
     func dismissView() {
         transitionHandler?.dismiss(animated: true, completion: nil)
     }

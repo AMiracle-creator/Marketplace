@@ -14,11 +14,12 @@ protocol PublicationCreationAssemblyProtocol {
 
 final class PublicationCreationAssembly: PublicationCreationAssemblyProtocol {
     func assemble(marketplaceUser: MarketplaceUser) -> UIViewController {
-        let view = PublicationCreationViewController()
         let databaseService = DatabaseService()
-        let router = PublicationCreationRouter(transitionHandler: view)
-        let presenter = PublicationCreationPresenter(view: view, router: router, databaseService: databaseService, marketplaceUser: marketplaceUser)
-        view.publicationCreationPresenter = presenter
+        let router = PublicationCreationRouter()
+        let presenter = PublicationCreationPresenter(router: router, databaseService: databaseService, marketplaceUser: marketplaceUser)
+        let view = PublicationCreationViewController(presenter: presenter)
+        presenter.view = view
+        router.transitionHandler = view
         return view
     }
 }

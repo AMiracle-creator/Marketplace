@@ -7,24 +7,23 @@
 
 import Foundation
 
-protocol PublicationCreationViewProtocol: AnyObject {
-    func updateState(isCreated state: Bool)
+protocol PublicationCreationViewInput: AnyObject {
+    func updateState()
     func failure(error: Error)
 }
 
-protocol PublicationCreationViewPresenterProtocol: AnyObject {
-    init(view: PublicationCreationViewController, router: PublicationCreationRouter?, databaseService: DatabaseServiceProtocol, marketplaceUser: MarketplaceUser?)
+protocol PublicationCreationViewOutput: AnyObject {
     func createPublicationButtonPressed(publication: Publication, image: Data)
+    var marketplaceUser: MarketplaceUser? { get set }
 }
 
-class PublicationCreationPresenter: PublicationCreationViewPresenterProtocol {
-    weak var view: PublicationCreationViewProtocol?
+class PublicationCreationPresenter: PublicationCreationViewOutput {
+    weak var view: PublicationCreationViewInput?
     let router: PublicationCreationRouter?
-    let databaseService: DatabaseServiceProtocol!
+    let databaseService: DatabaseServiceProtocol?
     var marketplaceUser: MarketplaceUser?
     
-    required init(view: PublicationCreationViewController, router: PublicationCreationRouter?, databaseService: DatabaseServiceProtocol, marketplaceUser: MarketplaceUser?) {
-        self.view = view
+    required init(router: PublicationCreationRouter?, databaseService: DatabaseServiceProtocol, marketplaceUser: MarketplaceUser?) {
         self.router = router
         self.databaseService = databaseService
         self.marketplaceUser = marketplaceUser
@@ -35,13 +34,13 @@ class PublicationCreationPresenter: PublicationCreationViewPresenterProtocol {
     }
     
     func createPublicationButtonPressed(publication: Publication, image: Data) {
-        self.view?.updateState(isCreated: false)
-        databaseService.setPublication(publication: publication, image: image) { [weak self] result in
+        self.view?.updateState()
+        databaseService?.setPublication(publication: publication, image: image) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let publication):
                 print(publication.title)
-                self.view?.updateState(isCreated: true)
+                self.dismissView()
             case .failure(let error):
                 self.view?.failure(error: error)
             }
