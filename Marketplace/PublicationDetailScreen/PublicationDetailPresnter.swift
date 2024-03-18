@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PublicationDetailViewInput: AnyObject {
-    func updateView(with publicastion: Publication)
+    func updateView(with publication: Publication)
 }
 
 protocol PublicationDetailViewOutput: AnyObject {

@@ -25,14 +25,12 @@ class PublicationDetailViewController: UIViewController {
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.text = "1000 ₽"
         label.font = .boldSystemFont(ofSize: 40)
         return label
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Собака забавная"
         label.font = .boldSystemFont(ofSize: 24)
         return label
     }()
@@ -46,7 +44,6 @@ class PublicationDetailViewController: UIViewController {
     
     private let descriptionText: UITextView = {
         let textView = UITextView()
-        textView.text = "Это большой объем текста, который будет отображаться в UITextView. UITextView обеспечивает прокрутку, чтобы пользователи могли просматривать весь текст.Это большой объем текста, который будет отображаться в UITextView. UITextView обеспечивает прокрутку, чтобы пользователи могли просматривать весь текст."
         textView.textAlignment = .left
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.isEditable = false
@@ -60,22 +57,18 @@ class PublicationDetailViewController: UIViewController {
     
     private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Даня"
         label.font = .boldSystemFont(ofSize: 24)
         return label
     }()
     
     private let createdTimeLabel: UILabel = {
         let label = UILabel()
-        label.text = "11 марта 2024, 17:34"
         label.textColor = .gray
         return label
     }()
     
     private let ratingStarsView: UIView = {
         let view = UIView()
-        // Здесь можно добавить звезды, например, изображения или настроенные UIViews
-        // Для простоты, давайте добавим просто текстовые звезды
         let starLabel = UILabel()
         starLabel.text = "⭐️⭐️⭐️⭐️"
         view.addSubview(starLabel)
@@ -113,7 +106,8 @@ class PublicationDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        presenter.viewDidLoad()
+        
         self.setupUI()
     }
     
@@ -181,7 +175,7 @@ class PublicationDetailViewController: UIViewController {
         }
     }
     
-    // MARK: - Privater methods
+    // MARK: - Private methods
     
     private func heightForView(text: String, font: UIFont, width: CGFloat) -> CGFloat {
         let size = CGSize(width: width, height: .infinity)
@@ -195,7 +189,15 @@ class PublicationDetailViewController: UIViewController {
 // MARK: - Extensions
 
 extension PublicationDetailViewController: PublicationDetailViewInput {
-    func updateView(with publicastion: Publication) {
-        print("123")
+    func updateView(with publication: Publication) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm E, d MMM y"
+        
+        self.priceLabel.text = publication.price
+        self.titleLabel.text = publication.title
+        self.usernameLabel.text = publication.userename
+        self.descriptionText.text = publication.description
+        self.createdTimeLabel.text = dateFormatter.string(from: publication.createdAt)
+        self.imageView.image = publication.image
     }
 }
