@@ -15,6 +15,7 @@ struct Publication: Identifiable, Hashable {
     var title: String
     var description: String
     var price: String
+    var category: String
     var createdAt: Date
     var image: UIImage?
     
@@ -26,17 +27,19 @@ struct Publication: Identifiable, Hashable {
         repres["title"] = title
         repres["description"] = description
         repres["price"] = price
+        repres["category"] = category
         repres["createdAt"] = Timestamp(date: createdAt)
         return repres
     }
     
-    init(id: String = UUID().uuidString, userID: String, username: String, title: String, description: String, price: String, createdAt: Date) {
+    init(id: String = UUID().uuidString, userID: String, username: String, title: String, description: String, price: String, category: String, createdAt: Date) {
         self.id = id
         self.userID = userID
         self.userename = username
         self.title = title
         self.description = description
         self.price = price
+        self.category = category
         self.createdAt = createdAt
     }
     
@@ -49,6 +52,7 @@ struct Publication: Identifiable, Hashable {
         guard let title = data["title"] as? String else { return nil }
         guard let description = data["description"] as? String else { return nil }
         guard let price = data["price"] as? String else { return nil }
+        guard let category = data["category"] as? String else { return nil }
         guard let createdAt = data["createdAt"] as? Timestamp else { return nil }
         
         self.id = id
@@ -57,6 +61,7 @@ struct Publication: Identifiable, Hashable {
         self.title = title
         self.description = description
         self.price = price
+        self.category = category
         self.createdAt = createdAt.dateValue()
     }
 }

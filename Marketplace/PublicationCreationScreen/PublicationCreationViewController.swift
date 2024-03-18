@@ -26,6 +26,29 @@ class PublicationCreationViewController: UIViewController {
     private let titleField = CustomTextField(fieldType: .title)
     private let priceField = CustomTextField(fieldType: .price)
     
+    let data = ["Вариант 1", "Вариант 2", "Вариант 3"]
+    var selectedRow = 0
+    
+    private let pickerButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .secondarySystemBackground
+        button.layer.cornerRadius = 10
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.contentHorizontalAlignment = .left
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.setTitle("Категория", for: .normal)
+        button.tintColor = .lightGray
+        button.setTitleColor(.gray, for: .normal)
+        return button
+    }()
+
+
     private let placeHolder = "Описание"
     
     private let descriptionField: UITextView = {
@@ -35,7 +58,7 @@ class PublicationCreationViewController: UIViewController {
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.backgroundColor = .secondarySystemBackground
         textView.layer.cornerRadius = 10
-        textView.textContainerInset = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 8)
+        textView.textContainerInset = UIEdgeInsets(top: 16, left: 8, bottom: 8, right: 8)
         return textView
     }()
     
@@ -50,6 +73,8 @@ class PublicationCreationViewController: UIViewController {
         static let customTextFieldHeight: CGFloat = 55
         static let secondaryButtonHeight: CGFloat = 44
         static let customTextFieldWidthMultiplier = 0.85
+        static let screenWidth = UIScreen.main.bounds.width - 10
+        static let screenHeight = UIScreen.main.bounds.height / 2
     }
 
     // MARK: - LifeCycle
@@ -68,7 +93,8 @@ class PublicationCreationViewController: UIViewController {
         view.backgroundColor = .systemBackground
             
         setupUI()
-        
+
+        pickerButton.addTarget(self, action: #selector(popUpPicker), for: .touchUpInside)
         addPublicationButton.addTarget(self, action: #selector(didTapAddPublication), for: .touchUpInside)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAddImage))
@@ -82,6 +108,7 @@ class PublicationCreationViewController: UIViewController {
         view.addSubview(descriptionField)
         view.addSubview(priceField)
         view.addSubview(addPublicationButton)
+        view.addSubview(pickerButton)
         
         descriptionField.delegate = self
         descriptionField.text = placeHolder
@@ -105,9 +132,15 @@ class PublicationCreationViewController: UIViewController {
             $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
         }
         
-        descriptionField.snp.makeConstraints {
+        pickerButton.snp.makeConstraints {
             $0.top.equalTo(priceField.snp.bottom).offset(UIConstants.bigOffset)
-            $0.leading.trailing.equalToSuperview().inset(UIConstants.bigOffset)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(UIConstants.customTextFieldHeight)
+            $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
+        }
+        
+        descriptionField.snp.makeConstraints {
+            $0.top.equalTo(pickerButton.snp.bottom).offset(UIConstants.bigOffset)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(110)
             $0.width.equalTo(priceField.snp.width)
@@ -143,9 +176,42 @@ class PublicationCreationViewController: UIViewController {
                                       title: titleField.text ?? "Не указано",
                                       description: descriptionField.text ?? "Не указано",
                                       price: priceField.text ?? "Не указано",
+                                      category: pickerButton.titleLabel?.text ?? "Не указано",
                                       createdAt: Date())
-
+        
         presenter.createPublicationButtonPressed(publication: publication, image: imageData)
+    }
+    
+    @objc private func popUpPicker() {
+        let vc = UIViewController()
+        vc.preferredContentSize = CGSize(width: UIConstants.screenWidth, height:  UIConstants.screenHeight)
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: UIConstants.screenWidth, height: UIConstants.screenHeight))
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        
+        pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+            
+        vc.view.addSubview(pickerView)
+        pickerView.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
+        pickerView.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
+    
+        let alert = UIAlertController(title: "Select Background Colour", message: "", preferredStyle: .actionSheet)
+        
+        alert.popoverPresentationController?.sourceView = pickerButton
+        alert.popoverPresentationController?.sourceRect = pickerButton.bounds
+                
+        alert.setValue(vc, forKey: "contentViewController")
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in }))
+                
+        alert.addAction(UIAlertAction(title: "Select", style: .default, handler: { (UIAlertAction) in
+            self.selectedRow = pickerView.selectedRow(inComponent: 0)
+            let selected = self.data[self.selectedRow]
+            let name = selected
+            self.pickerButton.setTitle(name, for: .normal)
+            self.pickerButton.setTitleColor(.black, for: .normal)
+        }))
+                
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -191,5 +257,26 @@ extension PublicationCreationViewController: UITextViewDelegate {
         }
         
         textView.resignFirstResponder()
+    }
+}
+
+extension PublicationCreationViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIConstants.screenWidth, height: 30))
+        label.text = data[row]
+        label.sizeToFit()
+        return label
+    }
+        
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+        
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        data.count
+    }
+        
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 60
     }
 }

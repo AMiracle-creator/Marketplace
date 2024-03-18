@@ -19,7 +19,7 @@ protocol MainViewOutput: AnyObject {
 class MainViewPresenter: MainViewOutput {
     weak var view: MainViewInput?
     var router: MainRouterProtocol?
-    let databaseService: DatabaseServiceProtocol!
+    let databaseService: DatabaseServiceProtocol?
     var categoriesCells = [ItemMain]()
     var publicationsCells = [ItemMain]()
     
@@ -94,26 +94,26 @@ class MainViewPresenter: MainViewOutput {
     }
     
     private func getPublicationItmes(completion: @escaping(Result<[ItemMain], Error>) -> Void) {
-        databaseService.getPublications(by: nil) { result in
-                switch result {
-                case .success(let pubs):
-                    let items = pubs.map { ItemMain.publications($0) }
-                    completion(.success(items))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
+        databaseService?.getPublications(by: nil) { result in
+            switch result {
+            case .success(let pubs):
+                let items = pubs.map { ItemMain.publications($0) }
+                completion(.success(items))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
     }
     
     private func getCategoryItems(completion: @escaping(Result<[ItemMain], Error>) -> Void) {
-        databaseService.getCategories { result in
-                switch result {
-                case .success(let categories):
-                    let items = categories.map { ItemMain.category($0) }
-                    completion(.success(items))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
+        databaseService?.getCategories { result in
+            switch result {
+            case .success(let categories):
+                let items = categories.map { ItemMain.category($0) }
+                completion(.success(items))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
     }
 }

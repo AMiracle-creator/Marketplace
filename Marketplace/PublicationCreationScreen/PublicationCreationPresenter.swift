@@ -46,4 +46,16 @@ class PublicationCreationPresenter: PublicationCreationViewOutput {
             }
         }
     }
+    
+    private func getCategoryItems(completion: @escaping(Result<[ItemMain], Error>) -> Void) {
+        databaseService?.getCategories { result in
+            switch result {
+            case .success(let categories):
+                let items = categories.map { ItemMain.category($0) }
+                completion(.success(items))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
