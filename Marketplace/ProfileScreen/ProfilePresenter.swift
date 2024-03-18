@@ -44,7 +44,12 @@ class ProfilePresenter: ProfileViewOutput {
     }
     
     func viewDidSelectItem(_ item: Item) {
-        // TODO: In
+        switch item {
+        case .publications(let publication):
+            router?.presentDetailView(with: publication)
+        case .loading(_), .error(_):
+            break
+        }
     }
     
     func tapOnPublicationCreation(marketplaceUser: MarketplaceUser) {
@@ -69,7 +74,6 @@ class ProfilePresenter: ProfileViewOutput {
     
     private func loadData() {
         let dispatchGroup = DispatchGroup()
-        var isError = false
         
         dispatchGroup.enter()
         getUser { [weak self] result in
@@ -88,30 +92,15 @@ class ProfilePresenter: ProfileViewOutput {
                         
                     case .failure(let erorr):
                         print(erorr.localizedDescription)
-                        isError = true
                     }
                     dispatchGroup.leave()
                 }
                 
             case .failure(let erorr):
                 print(erorr.localizedDescription)
-                isError = true
             }
             dispatchGroup.leave()
         }
-        
-//        dispatchGroup.enter()
-//        getUsersPublicationItems { [weak self] result in
-//            switch result {
-//            case .success(let items):
-//                self?.publicationsCells = items
-//
-//            case .failure(let erorr):
-//                print(erorr.localizedDescription)
-//                isError = true
-//            }
-//            dispatchGroup.leave()
-//        }
         
         dispatchGroup.notify(queue: .main) { [weak self] in
             guard let self else { return }

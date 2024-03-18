@@ -26,6 +26,7 @@ class ProfileViewController: UIViewController {
         collectionView.register(FooterSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: FooterSupplementaryView.reuseIdentifier)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -162,5 +163,17 @@ extension ProfileViewController: ProfileViewInput {
     
     func showAlert(alertManager: AlertManager, error: Error) {
         alertManager.showLogoutErrorAlert(on: self, with: error)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension ProfileViewController: UICollectionViewDelegate  {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        print(item)
+            
+        presenter.viewDidSelectItem(item)
     }
 }
