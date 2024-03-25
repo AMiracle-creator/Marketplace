@@ -19,18 +19,14 @@ protocol PublicationCreationViewOutput: AnyObject {
 
 class PublicationCreationPresenter: PublicationCreationViewOutput {
     weak var view: PublicationCreationViewInput?
-    let router: PublicationCreationRouter?
     let databaseService: DatabaseServiceProtocol?
+    let coordinator: ProfileScreenCoordinatorOutput?
     var marketplaceUser: MarketplaceUser?
     
-    required init(router: PublicationCreationRouter?, databaseService: DatabaseServiceProtocol, marketplaceUser: MarketplaceUser?) {
-        self.router = router
+    required init(databaseService: DatabaseServiceProtocol, marketplaceUser: MarketplaceUser?, coordinator: ProfileScreenCoordinatorOutput) {
         self.databaseService = databaseService
         self.marketplaceUser = marketplaceUser
-    }
-    
-    func dismissView() {
-        router?.dismissView()
+        self.coordinator = coordinator
     }
     
     func createPublicationButtonPressed(publication: Publication, image: Data) {
@@ -40,7 +36,7 @@ class PublicationCreationPresenter: PublicationCreationViewOutput {
             switch result {
             case .success(let publication):
                 print(publication.title)
-                self.dismissView()
+                coordinator?.closePublicationCreation()
             case .failure(let error):
                 self.view?.failure(error: error)
             }

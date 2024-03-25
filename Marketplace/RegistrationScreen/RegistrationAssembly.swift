@@ -16,11 +16,9 @@ final class RegistrationAssembly: RegistrationAssemblyProtocol {
     func assemble(coordinator: AuthCoordinatorOutput) -> UIViewController {
         let authService = AuthService()
         let alertManager = AlertManager()
-        let router = RegistrationRouter()
-        let presenter = RegistrationPresenter(authService: authService, alertManager: alertManager, router: router, coordinator: coordinator)
+        let presenter = RegistrationPresenter(authService: authService, alertManager: alertManager, coordinator: coordinator)
         let view = RegistrationController(presenter: presenter)
         presenter.view = view
-        router.transitionHandler = view
         return view
     }
 }

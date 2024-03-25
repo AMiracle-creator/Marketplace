@@ -20,12 +20,10 @@ protocol RegistrationViewOutput: AnyObject {
 class RegistrationPresenter: RegistrationViewOutput {
     weak var view: RegistrationViewInput?
     let authService: AuthServiceProtocol?
-    let router: RegistrationRouterProtocol?
     let alertManager: AlertManager?
     let coordinator: AuthCoordinatorOutput?
     
-    init(authService: AuthServiceProtocol, alertManager: AlertManager, router: RegistrationRouterProtocol, coordinator: AuthCoordinatorOutput) {
-        self.router = router
+    init(authService: AuthServiceProtocol, alertManager: AlertManager, coordinator: AuthCoordinatorOutput) {
         self.authService = authService
         self.alertManager = alertManager
         self.coordinator = coordinator
@@ -39,7 +37,6 @@ class RegistrationPresenter: RegistrationViewOutput {
             
             switch result {
             case .success(_):
-//                self.router?.presentMainScreen()
                 self.coordinator?.changeFlow()
             case .failure(let error):
                 self.view?.updateView(alertManager: alertManager, error: error)

@@ -19,11 +19,9 @@ protocol ForgotPasswordViewOutput: AnyObject {
 class ForgotPasswordPresenter: ForgotPasswordViewOutput {
     weak var view: ForgotPasswordInput?
     let authService: AuthServiceProtocol?
-    let router: ForgotPasswordRouter?
     let alertManager: AlertManager
     
-    init(authService: AuthServiceProtocol, alertManager: AlertManager, router: ForgotPasswordRouter) {
-        self.router = router
+    init(authService: AuthServiceProtocol, alertManager: AlertManager) {
         self.authService = authService
         self.alertManager = alertManager
     }

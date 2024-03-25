@@ -17,11 +17,9 @@ final class ProfileAssembly: ProfileAssemblyProtocol {
         let databaseService = DatabaseService()
         let alertManager = AlertManager()
         let authService = AuthService()
-        let router = ProfileRouter()
-        let presenter = ProfilePresenter(databaseService: databaseService, authService: authService, alertManager: alertManager, router: router, coordinator: coordinator)
+        let presenter = ProfilePresenter(databaseService: databaseService, authService: authService, alertManager: alertManager, coordinator: coordinator)
         let view = ProfileViewController(presenter: presenter)
         presenter.view = view
-        router.transitionHandler = view
         return view
     }
 }

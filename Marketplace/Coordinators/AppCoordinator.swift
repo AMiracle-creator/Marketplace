@@ -35,10 +35,6 @@ final class AppCoordinator: BaseCoordinator {
     }
     
     func openLoginScreen() {
-        
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
-        
         let authCoordinator = AuthCoordinator(navigationController: navigationController, flowListener: self)
         authCoordinator.start()
         
@@ -46,7 +42,6 @@ final class AppCoordinator: BaseCoordinator {
     }
     
     func openMainScreen() {
-
         let tabBarCoordinator = TabBarCoordinator(flowListener: self)
         window.rootViewController = tabBarCoordinator.start()
         window.makeKeyAndVisible()
@@ -66,23 +61,15 @@ final class AppCoordinator: BaseCoordinator {
 extension AppCoordinator: CoordinatorFlowListener {
     func onFlowFinished(coordinator: Coordinator) {
         remove(coordinator: coordinator)
+ 
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
         
-        if coordinator is TabBarCoordinator {
-            window.rootViewController = nil
-        }
-
         switch isLoggedIn() {
         case true:
             openMainScreen()
         case false:
             openLoginScreen()
         }
-        
-//        switch isLoggedIn() {
-//        case true:
-//            openMainScreen()
-//        case false:
-//            openLoginScreen()
-//        }
     }
 }

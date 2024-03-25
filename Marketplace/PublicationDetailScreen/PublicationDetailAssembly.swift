@@ -14,11 +14,9 @@ protocol PublicationDetailAssemblyProtocol {
 
 final class PublicationDetailAssembly: PublicationDetailAssemblyProtocol {
     func assemble(publication: Publication) -> UIViewController {
-        let router = PublicationDetailRouter()
-        let presenter = PublicationDetailPresenter(router: router, publication: publication)
+        let presenter = PublicationDetailPresenter(publication: publication)
         let view = PublicationDetailViewController(presenter: presenter)
         presenter.view = view
-        router.transitionHandler = view
         return view
     }
 }

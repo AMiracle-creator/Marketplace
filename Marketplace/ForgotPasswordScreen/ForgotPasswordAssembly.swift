@@ -16,11 +16,9 @@ final class ForgotPasswordAssembly: ForgotPasswordAssemblyProtocol {
     func assemble() -> UIViewController {
         let authService = AuthService()
         let alertManager = AlertManager()
-        let router = ForgotPasswordRouter()
-        let presenter = ForgotPasswordPresenter(authService: authService, alertManager: alertManager, router: router)
+        let presenter = ForgotPasswordPresenter(authService: authService, alertManager: alertManager)
         let view = ForgotPasswordController(presenter: presenter)
         presenter.view = view
-        router.transitionHandler = view
         return view
     }
 }

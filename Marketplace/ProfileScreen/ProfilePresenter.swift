@@ -27,12 +27,10 @@ class ProfilePresenter: ProfileViewOutput {
     let authService: AuthServiceProtocol?
     let alertManager: AlertManager?
     let coordinator: ProfileScreenCoordinatorOutput?
-    var router: ProfileRouterProtocol?
     var user: MarketplaceUser?
     var publicationsCells = [Item]()
     
-    init(databaseService: DatabaseServiceProtocol, authService: AuthServiceProtocol, alertManager: AlertManager, router: ProfileRouterProtocol, coordinator: ProfileScreenCoordinatorOutput) {
-        self.router = router
+    init(databaseService: DatabaseServiceProtocol, authService: AuthServiceProtocol, alertManager: AlertManager, coordinator: ProfileScreenCoordinatorOutput) {
         self.databaseService = databaseService
         self.authService = authService
         self.alertManager = alertManager

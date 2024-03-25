@@ -21,12 +21,10 @@ protocol LoginViewOutput: AnyObject {
 class LoginPresenter: LoginViewOutput {
     weak var view: LoginViewInput?
     let authService: AuthServiceProtocol?
-    let router: LoginRouterProtocol?
     let coordinator: AuthCoordinatorOutput?
     var alertManager: AlertManager?
     
-    init(authService: AuthServiceProtocol, alertManager: AlertManager, router: LoginRouterProtocol, coordinator: AuthCoordinatorOutput) {
-        self.router = router
+    init(authService: AuthServiceProtocol, alertManager: AlertManager, coordinator: AuthCoordinatorOutput) {
         self.authService = authService
         self.alertManager = alertManager
         self.coordinator = coordinator
@@ -39,7 +37,6 @@ class LoginPresenter: LoginViewOutput {
             
             switch result {
             case .success(_):
-//                self.router?.presentMainScreen()
                 self.coordinator?.changeFlow()
             case .failure(let error):
                 guard let alertManager = alertManager else { return }

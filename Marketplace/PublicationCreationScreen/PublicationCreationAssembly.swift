@@ -9,17 +9,15 @@ import Foundation
 import UIKit
 
 protocol PublicationCreationAssemblyProtocol {
-    func assemble(marketplaceUser: MarketplaceUser) -> UIViewController
+    func assemble(marketplaceUser: MarketplaceUser, coordinator: ProfileScreenCoordinatorOutput) -> UIViewController
 }
 
 final class PublicationCreationAssembly: PublicationCreationAssemblyProtocol {
-    func assemble(marketplaceUser: MarketplaceUser) -> UIViewController {
+    func assemble(marketplaceUser: MarketplaceUser, coordinator: ProfileScreenCoordinatorOutput) -> UIViewController {
         let databaseService = DatabaseService()
-        let router = PublicationCreationRouter()
-        let presenter = PublicationCreationPresenter(router: router, databaseService: databaseService, marketplaceUser: marketplaceUser)
+        let presenter = PublicationCreationPresenter(databaseService: databaseService, marketplaceUser: marketplaceUser, coordinator: coordinator)
         let view = PublicationCreationViewController(presenter: presenter)
         presenter.view = view
-        router.transitionHandler = view
         return view
     }
 }

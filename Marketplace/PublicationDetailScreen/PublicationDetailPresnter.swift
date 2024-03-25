@@ -17,11 +17,9 @@ protocol PublicationDetailViewOutput: AnyObject {
 
 class PublicationDetailPresenter: PublicationDetailViewOutput {
     weak var view: PublicationDetailViewInput?
-    let router: PublicationDetailRouterProtocol?
     let publication: Publication
     
-    init(router: PublicationDetailRouterProtocol, publication: Publication) {
-        self.router = router
+    init(publication: Publication) {
         self.publication = publication
     }
     

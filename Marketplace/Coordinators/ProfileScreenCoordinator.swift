@@ -10,6 +10,7 @@ import UIKit
 
 protocol ProfileScreenCoordinatorOutput: AnyObject {
     func openPublicationCreation(marketplaceUser: MarketplaceUser)
+    func closePublicationCreation()
     func openDetail(publication: Publication)
     func changeFlow()
 }
@@ -43,8 +44,12 @@ extension ProfileScreenCoordinator: CoordinatorFlowListener {
 
 extension ProfileScreenCoordinator: ProfileScreenCoordinatorOutput {
     func openPublicationCreation(marketplaceUser: MarketplaceUser) {
-        let publicationCreationController = PublicationCreationAssembly().assemble(marketplaceUser: marketplaceUser)
+        let publicationCreationController = PublicationCreationAssembly().assemble(marketplaceUser: marketplaceUser, coordinator: self)
         navigationController.present(publicationCreationController, animated: true)
+    }
+    
+    func closePublicationCreation() {
+        navigationController.dismiss(animated: true)
     }
     
     func openDetail(publication: Publication) {
