@@ -272,14 +272,7 @@
 		EE5C14AB2B3343CA004510AE /* Marketplace */ = {
 			isa = PBXGroup;
 			children = (
-				EE0B23992B9F8F7C0065AE44 /* PublicationDetailScreen */,
-				EEEC83B42B9785D500721510 /* MaintTabBar */,
-				EE119BCB2B74ED9600288399 /* PublicationCreationScreen */,
-				EEAEFD502B60754A00CAEDCA /* MainScreen */,
-				EEAEFDDF2B6D2C7C00CAEDCA /* ProfileScreen */,
-				EEEC83AB2B974FFD00721510 /* LoginScreen */,
-				EEEC83AC2B9768BB00721510 /* RegistrationScreen */,
-				EEEC83AD2B9768EF00721510 /* ForgotPasswordScreen */,
+				EEEBBC872BB1AA79005C5AB7 /* Screens */,
 				EE0B23A22BA985D50065AE44 /* Coordinators */,
 				EEAEFDA62B68E48600CAEDCA /* Services */,
 				EEC5074E2B59A068000654B5 /* Models */,
@@ -371,6 +364,21 @@
 				EEEC83A62B8E077F00721510 /* Categories.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		EEEBBC872BB1AA79005C5AB7 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				EE0B23992B9F8F7C0065AE44 /* PublicationDetailScreen */,
+				EEEC83B42B9785D500721510 /* MaintTabBar */,
+				EE119BCB2B74ED9600288399 /* PublicationCreationScreen */,
+				EEAEFD502B60754A00CAEDCA /* MainScreen */,
+				EEAEFDDF2B6D2C7C00CAEDCA /* ProfileScreen */,
+				EEEC83AB2B974FFD00721510 /* LoginScreen */,
+				EEEC83AC2B9768BB00721510 /* RegistrationScreen */,
+				EEEC83AD2B9768EF00721510 /* ForgotPasswordScreen */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		EEEC83A82B93466100721510 /* Extensions */ = {
