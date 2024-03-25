@@ -120,21 +120,6 @@ class LoginController: UIViewController, UITextFieldDelegate {
         let password = self.passwordField.text ?? ""
         
         presenter.didTapSignIn(email: email, password: password)
-//        AuthService.shared.signIn(email: email, password: password) { [weak self] error in
-//            guard let self = self else { return }
-//            if let error = error {
-//                AlertManager.showSignInErrorAlert(on: self, with: error)
-//                return
-//            } else {
-//                AlertManager.showSignInErrorAlert(on: self)
-//            }
-//
-//            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
-//                sceneDelegate.checkAuthenticaton()
-//            } else {
-//                AlertManager.showRegistrationErrorAlert(on: self)
-//            }
-//        }
     }
     
     @objc private func didTapNewUser() {

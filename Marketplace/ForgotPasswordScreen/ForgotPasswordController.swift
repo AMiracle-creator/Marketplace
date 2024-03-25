@@ -91,15 +91,6 @@ class ForgotPasswordController: UIViewController {
         let email = self.emailField.text ?? ""
         
         presenter.didTapResetPassword(email: email)
-//        AuthService.shared.forgotPassword(email: email) { [weak self] error in
-//            guard let self = self else { return }
-//            if let error = error {
-//                AlertManager.showErrorSendingPasswordResetAlert(on: self, with: error)
-//                return
-//            }
-//            
-//            AlertManager.showPasswordResetSentAlert(on: self)
-//        }
     }
 }
 

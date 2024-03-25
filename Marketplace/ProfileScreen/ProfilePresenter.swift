@@ -26,15 +26,17 @@ class ProfilePresenter: ProfileViewOutput {
     let databaseService: DatabaseServiceProtocol?
     let authService: AuthServiceProtocol?
     let alertManager: AlertManager?
+    let coordinator: ProfileScreenCoordinatorOutput?
     var router: ProfileRouterProtocol?
     var user: MarketplaceUser?
     var publicationsCells = [Item]()
     
-    init(databaseService: DatabaseServiceProtocol, authService: AuthServiceProtocol, alertManager: AlertManager, router: ProfileRouterProtocol) {
+    init(databaseService: DatabaseServiceProtocol, authService: AuthServiceProtocol, alertManager: AlertManager, router: ProfileRouterProtocol, coordinator: ProfileScreenCoordinatorOutput) {
         self.router = router
         self.databaseService = databaseService
         self.authService = authService
         self.alertManager = alertManager
+        self.coordinator = coordinator
     }
     
     // MARK: - MainViewOutput
@@ -46,14 +48,16 @@ class ProfilePresenter: ProfileViewOutput {
     func viewDidSelectItem(_ item: Item) {
         switch item {
         case .publications(let publication):
-            router?.presentDetailView(with: publication)
+//            router?.presentDetailView(with: publication)
+            coordinator?.openDetail(publication: publication)
         case .loading(_), .error(_):
             break
         }
     }
     
     func tapOnPublicationCreation(marketplaceUser: MarketplaceUser) {
-        router?.presentPublicationCreationScreen(marketplaceUser: marketplaceUser)
+//        router?.presentPublicationCreationScreen(marketplaceUser: marketplaceUser)
+        coordinator?.openPublicationCreation(marketplaceUser: marketplaceUser)
     }
     
     func didTapLogout() {
@@ -66,7 +70,7 @@ class ProfilePresenter: ProfileViewOutput {
                 return
             }
             
-            self.router?.presentLoginScreen()
+            coordinator?.changeFlow()
         }
     }
     

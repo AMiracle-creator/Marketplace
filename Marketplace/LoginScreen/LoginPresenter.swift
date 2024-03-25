@@ -22,12 +22,14 @@ class LoginPresenter: LoginViewOutput {
     weak var view: LoginViewInput?
     let authService: AuthServiceProtocol?
     let router: LoginRouterProtocol?
+    let coordinator: AuthCoordinatorOutput?
     var alertManager: AlertManager?
     
-    init(authService: AuthServiceProtocol, alertManager: AlertManager, router: LoginRouterProtocol) {
+    init(authService: AuthServiceProtocol, alertManager: AlertManager, router: LoginRouterProtocol, coordinator: AuthCoordinatorOutput) {
         self.router = router
         self.authService = authService
         self.alertManager = alertManager
+        self.coordinator = coordinator
     }
     
     // MARK: - MainViewOutput
@@ -37,7 +39,8 @@ class LoginPresenter: LoginViewOutput {
             
             switch result {
             case .success(_):
-                self.router?.presentMainScreen()
+//                self.router?.presentMainScreen()
+                self.coordinator?.changeFlow()
             case .failure(let error):
                 guard let alertManager = alertManager else { return }
                 self.view?.updateView(alertManager: alertManager, error: error)
@@ -46,10 +49,10 @@ class LoginPresenter: LoginViewOutput {
     }
     
     func didTapNewUser() {
-        self.router?.presentRegistrationScreen()
+        self.coordinator?.openRegistration()
     }
     
     func didTapForgotPassword() {
-        self.router?.presentForgotPasswordScreen()
+        self.coordinator?.openForgotPassword()
     }
 }

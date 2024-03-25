@@ -109,6 +109,8 @@ class PublicationDetailViewController: UIViewController {
         presenter.viewDidLoad()
         
         self.setupUI()
+        
+        navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     // MARK: - UI Setup

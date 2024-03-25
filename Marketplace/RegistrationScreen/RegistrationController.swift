@@ -143,22 +143,6 @@ class RegistrationController: UIViewController {
         let password = self.passwordField.text ?? ""
         
         presenter.didTapSignUp(username: username, email: email, password: password)
-        
-//        AuthService.shared.signUp(username: username, email: email, password: password) { [weak self] wasRegistred, error in
-//            guard let self = self else { return }
-//            if let error = error {
-//                AlertManager.showRegistrationErrorAlert(on: self, with: error)
-//                return
-//            }
-//            
-//            if wasRegistred {
-//                if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
-//                    sceneDelegate.checkAuthenticaton()
-//                } else {
-//                    AlertManager.showRegistrationErrorAlert(on: self)
-//                }
-//            }
-//        }
     }
     
     @objc private func didTapSignIn() {

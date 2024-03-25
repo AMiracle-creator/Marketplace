@@ -9,17 +9,15 @@ import Foundation
 import UIKit
 
 protocol MainAssemblyProtocol {
-    func assemble() -> UIViewController
+    func assemble(coordinator: MainScreenCoordinatorOutput) -> UIViewController
 }
 
 final class MainAssembly: MainAssemblyProtocol {
-    func assemble() -> UIViewController {
+    func assemble(coordinator: MainScreenCoordinatorOutput) -> UIViewController {
         let databaseService = DatabaseService()
-        let router = MainRouter()
-        let presenter = MainViewPresenter(databaseService: databaseService, router: router)
+        let presenter = MainViewPresenter(databaseService: databaseService, coordinator: coordinator)
         let view = MainViewController(presenter: presenter)
         presenter.view = view
-        router.transitionHandler = view
         return view
     }
 }

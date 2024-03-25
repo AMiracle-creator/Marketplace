@@ -11,24 +11,21 @@ import FirebaseAuth
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var appCoordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        self.setupWindow(with: scene)
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
         
-//        let viewController = PublicationDetailViewController()
-//        let nav = UINavigationController(rootViewController: viewController)
-//        nav.modalPresentationStyle = .fullScreen
-//        window?.rootViewController = nav
+        if let window {
+            appCoordinator = AppCoordinator(window: window)
+            appCoordinator?.start()
+        }
         
-        self.checkAuthenticaton()
-//
-//        let viewController = LoginAssembly().assemble()
-//        let nav = UINavigationController(rootViewController: viewController)
-//
-//        window = UIWindow(windowScene: windowScene)
-//        window?.windowScene = windowScene
-//        window?.makeKeyAndVisible()
-//        window?.rootViewController = nav
+        
+//        self.setupWindow(with: scene)
+    
+//        self.checkAuthenticaton()
     }
     
     private func setupWindow(with scene: UIScene) {
@@ -38,19 +35,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
     
-    public func checkAuthenticaton() {
-        guard let window else { return assertionFailure("Window was not configurated") }
-        
-        let viewController: UIViewController
-        if Auth.auth().currentUser == nil {
-            viewController = LoginAssembly().assemble()
-        } else {
-            viewController = MainTabBarAssembly().assemble()
-        }
-        let nav = UINavigationController(rootViewController: viewController)
-        nav.modalPresentationStyle = .fullScreen
-        window.rootViewController = nav
-    }
+//    public func checkAuthenticaton() {
+//        guard let window else { return assertionFailure("Window was not configurated") }
+//
+//        let viewController: UIViewController
+//        if Auth.auth().currentUser == nil {
+//            viewController = LoginAssembly().assemble()
+//        } else {
+//            viewController = MainTabBarAssembly().assemble()
+//        }
+//        let nav = UINavigationController(rootViewController: viewController)
+//        nav.modalPresentationStyle = .fullScreen
+//        window.rootViewController = nav
+//    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

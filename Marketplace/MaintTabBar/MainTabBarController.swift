@@ -15,19 +15,19 @@ class MainTabBarController: UITabBarController {
     }
     
     private func generateTabBar() {
-        let searchViewController = MainAssembly().assemble()
-        let profileViewController = ProfileAssembly().assemble()
+//        let searchViewController = MainAssembly().assemble()
+//        let profileViewController = ProfileAssembly().assemble()
         
-        let searchNavigationController = UINavigationController(rootViewController: searchViewController)
-        let profileNavigationController = UINavigationController(rootViewController: profileViewController)
+//        let searchNavigationController = UINavigationController(rootViewController: searchViewController)
+//        let profileNavigationController = UINavigationController(rootViewController: profileViewController)
         
-        searchNavigationController.tabBarItem.title = "Поиск"
-        searchNavigationController.tabBarItem.image = UIImage(systemName: "magnifyingglass")
+//        searchNavigationController.tabBarItem.title = "Поиск"
+//        searchNavigationController.tabBarItem.image = UIImage(systemName: "magnifyingglass")
         
-        profileNavigationController.tabBarItem.title = "Профиль"
-        profileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
-        
-        viewControllers = [searchNavigationController, profileNavigationController]
+//        profileNavigationController.tabBarItem.title = "Профиль"
+//        profileNavigationController.tabBarItem.image = UIImage(systemName: "person.fill")
+//        
+//        viewControllers = [profileNavigationController]
     }
     
     private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {

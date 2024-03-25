@@ -9,16 +9,16 @@ import Foundation
 import UIKit
 
 protocol ProfileAssemblyProtocol {
-    func assemble() -> UIViewController
+    func assemble(coordinator: ProfileScreenCoordinatorOutput) -> UIViewController
 }
 
 final class ProfileAssembly: ProfileAssemblyProtocol {
-    func assemble() -> UIViewController {
+    func assemble(coordinator: ProfileScreenCoordinatorOutput) -> UIViewController {
         let databaseService = DatabaseService()
         let alertManager = AlertManager()
         let authService = AuthService()
         let router = ProfileRouter()
-        let presenter = ProfilePresenter(databaseService: databaseService, authService: authService, alertManager: alertManager, router: router)
+        let presenter = ProfilePresenter(databaseService: databaseService, authService: authService, alertManager: alertManager, router: router, coordinator: coordinator)
         let view = ProfileViewController(presenter: presenter)
         presenter.view = view
         router.transitionHandler = view

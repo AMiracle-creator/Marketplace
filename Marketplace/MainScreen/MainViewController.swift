@@ -51,7 +51,9 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - UI Setup

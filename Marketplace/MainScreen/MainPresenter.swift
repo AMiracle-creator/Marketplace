@@ -18,14 +18,14 @@ protocol MainViewOutput: AnyObject {
 
 class MainViewPresenter: MainViewOutput {
     weak var view: MainViewInput?
-    var router: MainRouterProtocol?
     let databaseService: DatabaseServiceProtocol?
+    let coordinator: MainScreenCoordinatorOutput?
     var categoriesCells = [ItemMain]()
     var publicationsCells = [ItemMain]()
     
-    init(databaseService: DatabaseServiceProtocol, router: MainRouterProtocol) {
-        self.router = router
+    init(databaseService: DatabaseServiceProtocol, coordinator: MainScreenCoordinatorOutput) {
         self.databaseService = databaseService
+        self.coordinator = coordinator
     }
     
     // MARK: - MainViewOutput
@@ -38,7 +38,7 @@ class MainViewPresenter: MainViewOutput {
     func viewDidSelectItem(_ item: ItemMain) {
         switch item {
         case .publications(let publication):
-            router?.presentDetailView(with: publication)
+            coordinator?.openDetail(publication: publication)
         case .category(let category):
             print("Selected category: \(category.name)")
         case .loading, .error:

@@ -26,9 +26,10 @@ class RegistrationRouter: RegistrationRouterProtocol {
     }
     
     func presentLoginScreen() {
-        if let transitionHandler = transitionHandler {
-            let loginViewController = loginAssembly.assemble()
-            transitionHandler.navigationController?.pushViewController(loginViewController, animated: true)
-        }
+//        if let transitionHandler = transitionHandler {
+//            let loginViewController = loginAssembly.assemble()
+//            transitionHandler.navigationController?.pushViewController(loginViewController, animated: true)
+//        }
+        print("123")
     }
 }

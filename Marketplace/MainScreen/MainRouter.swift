@@ -18,9 +18,9 @@ class MainRouter: MainRouterProtocol {
     
     
     func presentDetailView(with publication: Publication) {
-        if let transitionHandler = transitionHandler {
-            let detailViewController = publicationDetailAssembly.assemble(publication: publication)
-            transitionHandler.navigationController?.pushViewController(detailViewController, animated: true)
-        }
+//        if let transitionHandler = transitionHandler {
+//            let detailViewController = publicationDetailAssembly.assemble(publication: publication)
+//            transitionHandler.navigationController?.pushViewController(detailViewController, animated: true)
+//        }
     }
 }

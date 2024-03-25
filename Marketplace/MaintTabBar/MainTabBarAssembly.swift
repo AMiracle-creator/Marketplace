@@ -18,4 +18,3 @@ final class MainTabBarAssembly: MainTabBarAssemblyProtocol {
         return view
     }
 }
-

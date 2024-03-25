@@ -29,15 +29,15 @@ class ProfileRouter: ProfileRouterProtocol {
     
     func presentLoginScreen() {
         if let transitionHandler = transitionHandler {
-            let loginViewController = loginAssembly.assemble()
-            transitionHandler.navigationController?.pushViewController(loginViewController, animated: true)
+//            let loginViewController = loginAssembly.assemble()
+//            transitionHandler.navigationController?.pushViewController(loginViewController, animated: true)
         }
     }
     
     func presentDetailView(with publication: Publication) {
-        if let transitionHandler = transitionHandler {
-            let detailViewController = publicationDetailAssembly.assemble(publication: publication)
-            transitionHandler.navigationController?.pushViewController(detailViewController, animated: true)
-        }
+//        if let transitionHandler = transitionHandler {
+//            let detailViewController = publicationDetailAssembly.assemble(publication: publication)
+//            transitionHandler.navigationController?.pushViewController(detailViewController, animated: true)
+//        }
     }
 }

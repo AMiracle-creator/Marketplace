@@ -21,12 +21,14 @@ class RegistrationPresenter: RegistrationViewOutput {
     weak var view: RegistrationViewInput?
     let authService: AuthServiceProtocol?
     let router: RegistrationRouterProtocol?
-    var alertManager: AlertManager?
+    let alertManager: AlertManager?
+    let coordinator: AuthCoordinatorOutput?
     
-    init(authService: AuthServiceProtocol, alertManager: AlertManager, router: RegistrationRouterProtocol) {
+    init(authService: AuthServiceProtocol, alertManager: AlertManager, router: RegistrationRouterProtocol, coordinator: AuthCoordinatorOutput) {
         self.router = router
         self.authService = authService
         self.alertManager = alertManager
+        self.coordinator = coordinator
     }
     
     // MARK: - MainViewOutput
@@ -37,7 +39,8 @@ class RegistrationPresenter: RegistrationViewOutput {
             
             switch result {
             case .success(_):
-                self.router?.presentMainScreen()
+//                self.router?.presentMainScreen()
+                self.coordinator?.changeFlow()
             case .failure(let error):
                 self.view?.updateView(alertManager: alertManager, error: error)
             }
@@ -45,6 +48,6 @@ class RegistrationPresenter: RegistrationViewOutput {
     }
     
     func didTapSignIn() {
-        self.router?.presentLoginScreen()
+        self.coordinator?.openLogin()
     }
 }
