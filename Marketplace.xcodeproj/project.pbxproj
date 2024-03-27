@@ -35,7 +35,6 @@
 		EE5C14AF2B3343CA004510AE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C14AE2B3343CA004510AE /* SceneDelegate.swift */; };
 		EE5C14B62B3343CA004510AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE5C14B52B3343CA004510AE /* Assets.xcassets */; };
 		EE5C14B92B3343CA004510AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE5C14B72B3343CA004510AE /* LaunchScreen.storyboard */; };
-		EE7CD1B02B362B1F003EBABE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7CD1AF2B362B1F003EBABE /* HomeViewController.swift */; };
 		EE7CD1B32B36EBB1003EBABE /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7CD1B22B36EBB1003EBABE /* AuthHeaderView.swift */; };
 		EEAEFD4B2B5BBBCE00CAEDCA /* AuthValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFD4A2B5BBBCE00CAEDCA /* AuthValidator.swift */; };
 		EEAEFD4D2B5FE06A00CAEDCA /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFD4C2B5FE06A00CAEDCA /* APIManager.swift */; };
@@ -106,7 +105,6 @@
 		EE5C14B52B3343CA004510AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE5C14B82B3343CA004510AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE5C14BA2B3343CA004510AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE7CD1AF2B362B1F003EBABE /* HomeViewController.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		EE7CD1B22B36EBB1003EBABE /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		EEAEFD4A2B5BBBCE00CAEDCA /* AuthValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthValidator.swift; sourceTree = "<group>"; };
 		EEAEFD4C2B5FE06A00CAEDCA /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -276,7 +274,6 @@
 				EE0B23A22BA985D50065AE44 /* Coordinators */,
 				EEAEFDA62B68E48600CAEDCA /* Services */,
 				EEC5074E2B59A068000654B5 /* Models */,
-				EEC507422B595AB1000654B5 /* Controllers */,
 				EE02110B2B3448450096E1DA /* Application */,
 				EE02110D2B3448970096E1DA /* Core */,
 				EE7CD1B12B36EADF003EBABE /* Views */,
@@ -346,15 +343,6 @@
 			path = ProfileScreen;
 			sourceTree = "<group>";
 		};
-		EEC507422B595AB1000654B5 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				EE7CD1AF2B362B1F003EBABE /* HomeViewController.swift */,
-				EEC507402B56A875000654B5 /* WebViewerController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		EEC5074E2B59A068000654B5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				EE0211112B3619B50096E1DA /* RegistrationController.swift */,
+				EEC507402B56A875000654B5 /* WebViewerController.swift */,
 				EED8B23A2B99F348002D244C /* RegistrationAssembly.swift */,
 				EED8B23C2B99F35D002D244C /* RegestrationPresenter.swift */,
 			);
@@ -561,7 +550,6 @@
 				EE119BCF2B7664E900288399 /* DatabaseService.swift in Sources */,
 				EEEC83A32B8C903700721510 /* MainAssembly.swift in Sources */,
 				EE0B239D2B9F8FBF0065AE44 /* PublicationDetailPresnter.swift in Sources */,
-				EE7CD1B02B362B1F003EBABE /* HomeViewController.swift in Sources */,
 				EEC5074D2B599F1A000654B5 /* AuthService.swift in Sources */,
 				EE2E160C2B823F6200F0BD51 /* ProfileAssembly.swift in Sources */,
 				EE0B23A52BA986DA0065AE44 /* Coordinator.swift in Sources */,

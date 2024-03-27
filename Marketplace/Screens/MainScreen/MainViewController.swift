@@ -8,19 +8,20 @@
 import UIKit
 import SnapKit
 
-enum Section: Int {
-    case category
-    case main
-}
-
 private typealias DataSource = UICollectionViewDiffableDataSource<MainSections, ItemMain>
 
 class MainViewController: UIViewController {
     
     private let presenter: MainViewOutput
-    private lazy var dataSource: DataSource = configureDataSource()
+    private lazy var dataSource: DataSource = {
+        let dataSource = configureDataSource()
+        let initialSnapshot = dataSource.snapshot()
+        return dataSource
+    }()
     
-    // MARK: - UI Components
+    // MARK: UI Components
+    
+    private let searchController = UISearchController(searchResultsController: nil)
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .mainScreen)
@@ -32,7 +33,7 @@ class MainViewController: UIViewController {
         return collectionView
     }()
     
-    // MARK: - LifeCycle
+    // MARK: LifeCycle
     
     init(presenter: MainViewOutput) {
         self.presenter = presenter
@@ -45,6 +46,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupSearchController()
         self.setupUI()
         self.presenter.viewDidLoad()
     }
@@ -56,7 +58,7 @@ class MainViewController: UIViewController {
         self.navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
-    // MARK: - UI Setup
+    // MARK: UI Setup
     private func setupUI() {
         self.view.backgroundColor = .systemBackground
         
@@ -68,6 +70,22 @@ class MainViewController: UIViewController {
             $0.bottom.equalToSuperview()
         }
     }
+    
+    // MARK: SearchController Setup
+    
+    private func setupSearchController() {
+        self.searchController.searchResultsUpdater = self
+        self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.searchBar.placeholder = "Поиск"
+        self.searchController.searchBar.setValue("Отмена", forKey: "cancelButtonText")
+        
+        self.navigationItem.searchController = searchController
+        self.definesPresentationContext = false
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    // MARK: Configuring DataSource
     
     private func configureDataSource() -> DataSource {
         
@@ -102,7 +120,8 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions
+// MARK: - MainViewInput
+
 extension MainViewController: MainViewInput {
     
     func updateView(with sections: [MainSections]) {
@@ -115,10 +134,20 @@ extension MainViewController: MainViewInput {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension MainViewController: UICollectionViewDelegate  {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
             
         presenter.viewDidSelectItem(item)
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension MainViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        presenter.filterContent(queryOrNil: searchController.searchBar.text)
     }
 }

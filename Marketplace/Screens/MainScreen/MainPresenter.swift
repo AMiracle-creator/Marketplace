@@ -14,6 +14,7 @@ protocol MainViewInput: AnyObject {
 protocol MainViewOutput: AnyObject {
     func viewDidLoad()
     func viewDidSelectItem(_ item: ItemMain)
+    func filterContent(queryOrNil: String?)
 }
 
 class MainViewPresenter: MainViewOutput {
@@ -44,6 +45,29 @@ class MainViewPresenter: MainViewOutput {
         case .loading, .error:
             break
         }
+    }
+    
+    func filterContent(queryOrNil: String?) {
+        guard let query = queryOrNil, !query.isEmpty else {
+            self.view?.updateView(with: [.categories(self.categoriesCells), .main(self.publicationsCells)])
+            return
+        }
+        
+        let publications = publicationsCells.compactMap { item -> Publication? in
+            if case .publications(let publication) = item {
+                return publication
+            }
+            return nil
+        }
+        
+        let filteredPublications = publications.filter { publication in
+            return publication.title.lowercased().contains(query.lowercased())
+        }
+        
+        let filteredPublicationsCells = filteredPublications.map { ItemMain.publications($0) }
+        
+        self.view?.updateView(with: [.categories(self.categoriesCells), .main(filteredPublicationsCells)])
+        
     }
     
     // MARK: Privat methods
