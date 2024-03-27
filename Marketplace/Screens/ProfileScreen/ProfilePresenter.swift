@@ -18,6 +18,7 @@ protocol ProfileViewOutput: AnyObject {
     func viewDidSelectItem(_ item: Item)
     func tapOnPublicationCreation(marketplaceUser: MarketplaceUser)
     func didTapLogout()
+    func refreshData()
     var user: MarketplaceUser? { get set }
 }
 
@@ -46,7 +47,6 @@ class ProfilePresenter: ProfileViewOutput {
     func viewDidSelectItem(_ item: Item) {
         switch item {
         case .publications(let publication):
-//            router?.presentDetailView(with: publication)
             coordinator?.openDetail(publication: publication)
         case .loading(_), .error(_):
             break
@@ -54,7 +54,6 @@ class ProfilePresenter: ProfileViewOutput {
     }
     
     func tapOnPublicationCreation(marketplaceUser: MarketplaceUser) {
-//        router?.presentPublicationCreationScreen(marketplaceUser: marketplaceUser)
         coordinator?.openPublicationCreation(marketplaceUser: marketplaceUser)
     }
     
@@ -69,6 +68,28 @@ class ProfilePresenter: ProfileViewOutput {
             }
             
             coordinator?.changeFlow()
+        }
+    }
+    
+    func refreshData() {
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        getUsersPublicationItems { [weak self] result in
+            switch result {
+            case .success(let items):
+                self?.publicationsCells = items
+                
+            case .failure(let erorr):
+                print(erorr.localizedDescription)
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            
+            self.view?.updateUserPublications(with: [.main(self.publicationsCells)])
         }
     }
     
@@ -130,7 +151,6 @@ class ProfilePresenter: ProfileViewOutput {
             case .success(let pubs):
                 let items = pubs.map { Item.publications($0) }
                 completion(.success(items))
-//                    self.view?.updateUserPublications(with: [.main(items)])
             case .failure(let error):
                 completion(.failure(error))
             }

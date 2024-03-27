@@ -15,6 +15,7 @@ protocol MainViewOutput: AnyObject {
     func viewDidLoad()
     func viewDidSelectItem(_ item: ItemMain)
     func filterContent(queryOrNil: String?)
+    func refreshData()
 }
 
 class MainViewPresenter: MainViewOutput {
@@ -68,6 +69,31 @@ class MainViewPresenter: MainViewOutput {
         
         self.view?.updateView(with: [.categories(self.categoriesCells), .main(filteredPublicationsCells)])
         
+    }
+    
+    func refreshData() {
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        getPublicationItmes { [weak self] result in
+            switch result {
+            case .success(let items):
+                self?.publicationsCells = items
+                
+            case .failure(let erorr):
+                print(erorr.localizedDescription)
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let self else { return }
+            
+            self.view?.updateView(with: [
+                .categories(self.categoriesCells),
+                .main(self.publicationsCells)
+            ])
+        }
     }
     
     // MARK: Privat methods

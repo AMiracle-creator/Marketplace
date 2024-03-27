@@ -23,6 +23,8 @@ class MainViewController: UIViewController {
     
     private let searchController = UISearchController(searchResultsController: nil)
     
+    private let refreshControl = UIRefreshControl()
+    
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .mainScreen)
         collectionView.register(PublicationCollectionViewCell.self, forCellWithReuseIdentifier: "PublicationCollectionViewCell")
@@ -30,6 +32,7 @@ class MainViewController: UIViewController {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
+        collectionView.refreshControl = self.refreshControl
         return collectionView
     }()
     
@@ -61,6 +64,8 @@ class MainViewController: UIViewController {
     // MARK: UI Setup
     private func setupUI() {
         self.view.backgroundColor = .systemBackground
+        
+        self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
         self.view.addSubview(collectionView)
 
@@ -118,6 +123,12 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: Selectors
+    
+    @objc private func refreshData() {
+        presenter.refreshData()
+    }
 }
 
 // MARK: - MainViewInput
@@ -131,6 +142,7 @@ extension MainViewController: MainViewInput {
             snapshot.appendItems(section.items, toSection: section)
         }
         dataSource.apply(snapshot, animatingDifferences: true)
+        refreshControl.endRefreshing()
     }
 }
 

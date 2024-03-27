@@ -19,6 +19,8 @@ class ProfileViewController: UIViewController {
     
     private let profileHeaderView = ProfileHeaderVIew(title: "User")
     
+    private let refreshControl = UIRefreshControl()
+    
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .profileScreen)
         collectionView.register(ProfilePublicationCollectionViewCell.self, forCellWithReuseIdentifier: ProfilePublicationCollectionViewCell.reuseIdentifier)
@@ -27,6 +29,7 @@ class ProfileViewController: UIViewController {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
+        collectionView.refreshControl = self.refreshControl
         return collectionView
     }()
     
@@ -54,8 +57,6 @@ class ProfileViewController: UIViewController {
         self.setupUI()
         self.configureHeader()
         self.presenter.viewDidLoad()
-        
-        self.newPublicationButton.addTarget(self, action: #selector(didTapNewPublication), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +69,11 @@ class ProfileViewController: UIViewController {
     
     private func setupUI() {
         self.view.backgroundColor = .systemBackground
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(didTapLogout))
+        
+        self.newPublicationButton.addTarget(self, action: #selector(didTapNewPublication), for: .touchUpInside)
+        self.refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
         self.view.addSubview(profileHeaderView)
         self.view.addSubview(collectionView)
@@ -143,6 +148,10 @@ class ProfileViewController: UIViewController {
     @objc private func didTapLogout() {
         presenter.didTapLogout()
     }
+    
+    @objc private func refreshData() {
+        presenter.refreshData()
+    }
 }
 
 // MARK: - ProfileViewInput extension
@@ -155,6 +164,8 @@ extension ProfileViewController: ProfileViewInput {
             snapshot.appendItems(section.items, toSection: section)
         }
         dataSource.apply(snapshot, animatingDifferences: true)
+        
+        refreshControl.endRefreshing()
     }
 
     func updateUserInfo(with username: String) {
@@ -171,8 +182,6 @@ extension ProfileViewController: ProfileViewInput {
 extension ProfileViewController: UICollectionViewDelegate  {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
-        
-        print(item)
             
         presenter.viewDidSelectItem(item)
     }
