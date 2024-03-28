@@ -16,7 +16,7 @@ class PublicationDetailViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
         imageView.image = UIImage(named: "dog")
         imageView.clipsToBounds = true

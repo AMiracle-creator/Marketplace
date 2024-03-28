@@ -17,6 +17,7 @@ class PublicationCollectionViewCell: UICollectionViewCell {
         let image = UIImageView()
         image.layer.cornerRadius = 5
         image.clipsToBounds = true
+        image.contentMode = .scaleAspectFill
         return image
     }()
     

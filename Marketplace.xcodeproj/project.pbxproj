@@ -41,11 +41,8 @@
 		EEAEFD4F2B5FE25F00CAEDCA /* Publicaton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFD4E2B5FE25F00CAEDCA /* Publicaton.swift */; };
 		EEAEFD572B60787F00CAEDCA /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFD562B60787F00CAEDCA /* MainPresenter.swift */; };
 		EEAEFD5A2B607B3200CAEDCA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFD592B607B3200CAEDCA /* MainViewController.swift */; };
-		EEAEFD5C2B60811500CAEDCA /* AssemblyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFD5B2B60811500CAEDCA /* AssemblyBuilder.swift */; };
 		EEAEFDA22B65032F00CAEDCA /* PublicationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFDA12B65032F00CAEDCA /* PublicationCollectionViewCell.swift */; };
 		EEAEFDA52B67B22500CAEDCA /* HorizontalMenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFDA42B67B22500CAEDCA /* HorizontalMenuCollectionViewCell.swift */; };
-		EEAEFDAA2B6904BC00CAEDCA /* PublicationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFDA92B6904BC00CAEDCA /* PublicationCategory.swift */; };
-		EEAEFDDE2B6D1BDA00CAEDCA /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFDDD2B6D1BDA00CAEDCA /* MainTabBarController.swift */; };
 		EEAEFDE12B6D2CA000CAEDCA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFDE02B6D2CA000CAEDCA /* ProfileViewController.swift */; };
 		EEAEFDE32B6D59EE00CAEDCA /* ProfileHeaderVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFDE22B6D59EE00CAEDCA /* ProfileHeaderVIew.swift */; };
 		EEAEFDE52B70CF5600CAEDCA /* ProfilePublicationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAEFDE42B70CF5600CAEDCA /* ProfilePublicationCollectionViewCell.swift */; };
@@ -67,7 +64,6 @@
 		EEEC83AA2B93467800721510 /* UICollectionViewLayout+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEC83A92B93467800721510 /* UICollectionViewLayout+Extension.swift */; };
 		EEEC83AF2B97774200721510 /* LoginAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEC83AE2B97774200721510 /* LoginAssembly.swift */; };
 		EEEC83B32B9777CF00721510 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEC83B22B9777CF00721510 /* LoginPresenter.swift */; };
-		EEEC83B62B9786DB00721510 /* MainTabBarAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEC83B52B9786DB00721510 /* MainTabBarAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,11 +107,8 @@
 		EEAEFD4E2B5FE25F00CAEDCA /* Publicaton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publicaton.swift; sourceTree = "<group>"; };
 		EEAEFD562B60787F00CAEDCA /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		EEAEFD592B607B3200CAEDCA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		EEAEFD5B2B60811500CAEDCA /* AssemblyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyBuilder.swift; sourceTree = "<group>"; };
 		EEAEFDA12B65032F00CAEDCA /* PublicationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationCollectionViewCell.swift; sourceTree = "<group>"; };
 		EEAEFDA42B67B22500CAEDCA /* HorizontalMenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMenuCollectionViewCell.swift; sourceTree = "<group>"; };
-		EEAEFDA92B6904BC00CAEDCA /* PublicationCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationCategory.swift; sourceTree = "<group>"; };
-		EEAEFDDD2B6D1BDA00CAEDCA /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		EEAEFDE02B6D2CA000CAEDCA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EEAEFDE22B6D59EE00CAEDCA /* ProfileHeaderVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderVIew.swift; sourceTree = "<group>"; };
 		EEAEFDE42B70CF5600CAEDCA /* ProfilePublicationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePublicationCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -137,7 +130,6 @@
 		EEEC83A92B93467800721510 /* UICollectionViewLayout+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+Extension.swift"; sourceTree = "<group>"; };
 		EEEC83AE2B97774200721510 /* LoginAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembly.swift; sourceTree = "<group>"; };
 		EEEC83B22B9777CF00721510 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
-		EEEC83B52B9786DB00721510 /* MainTabBarAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAssembly.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,13 +189,6 @@
 				EE5C14BA2B3343CA004510AE /* Info.plist */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		EE02110D2B3448970096E1DA /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Core;
 			sourceTree = "<group>";
 		};
 		EE0B23992B9F8F7C0065AE44 /* PublicationDetailScreen */ = {
@@ -275,7 +260,6 @@
 				EEAEFDA62B68E48600CAEDCA /* Services */,
 				EEC5074E2B59A068000654B5 /* Models */,
 				EE02110B2B3448450096E1DA /* Application */,
-				EE02110D2B3448970096E1DA /* Core */,
 				EE7CD1B12B36EADF003EBABE /* Views */,
 				EE02110C2B34485E0096E1DA /* Resources */,
 			);
@@ -325,7 +309,6 @@
 				EEAEFD4A2B5BBBCE00CAEDCA /* AuthValidator.swift */,
 				EEAEFD4C2B5FE06A00CAEDCA /* APIManager.swift */,
 				EEC5074C2B599F1A000654B5 /* AuthService.swift */,
-				EEAEFD5B2B60811500CAEDCA /* AssemblyBuilder.swift */,
 				EE119BCE2B7664E900288399 /* DatabaseService.swift */,
 				EE29D37B2B83AB85004EA6D2 /* StorageService.swift */,
 			);
@@ -348,7 +331,6 @@
 			children = (
 				EEC5074F2B59A09D000654B5 /* User.swift */,
 				EEAEFD4E2B5FE25F00CAEDCA /* Publicaton.swift */,
-				EEAEFDA92B6904BC00CAEDCA /* PublicationCategory.swift */,
 				EEEC83A62B8E077F00721510 /* Categories.swift */,
 			);
 			path = Models;
@@ -358,7 +340,6 @@
 			isa = PBXGroup;
 			children = (
 				EE0B23992B9F8F7C0065AE44 /* PublicationDetailScreen */,
-				EEEC83B42B9785D500721510 /* MaintTabBar */,
 				EE119BCB2B74ED9600288399 /* PublicationCreationScreen */,
 				EEAEFD502B60754A00CAEDCA /* MainScreen */,
 				EEAEFDDF2B6D2C7C00CAEDCA /* ProfileScreen */,
@@ -406,15 +387,6 @@
 				EED8B2342B99D9B4002D244C /* ForgotPasswordPresenter.swift */,
 			);
 			path = ForgotPasswordScreen;
-			sourceTree = "<group>";
-		};
-		EEEC83B42B9785D500721510 /* MaintTabBar */ = {
-			isa = PBXGroup;
-			children = (
-				EEAEFDDD2B6D1BDA00CAEDCA /* MainTabBarController.swift */,
-				EEEC83B52B9786DB00721510 /* MainTabBarAssembly.swift */,
-			);
-			path = MaintTabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -535,7 +507,6 @@
 				EEC5073B2B515ABA000654B5 /* CustomTextField.swift in Sources */,
 				EE2E160E2B82490900F0BD51 /* PublicationCreationAssembly.swift in Sources */,
 				EE0B23A72BA987AB0065AE44 /* BaseCoordinator.swift in Sources */,
-				EEEC83B62B9786DB00721510 /* MainTabBarAssembly.swift in Sources */,
 				EEEC83B32B9777CF00721510 /* LoginPresenter.swift in Sources */,
 				EEC507442B595AF9000654B5 /* AlertManager.swift in Sources */,
 				EE29D37C2B83AB85004EA6D2 /* StorageService.swift in Sources */,
@@ -546,7 +517,6 @@
 				EE119BD12B7A31B100288399 /* ProfilePresenter.swift in Sources */,
 				EEAEFDA22B65032F00CAEDCA /* PublicationCollectionViewCell.swift in Sources */,
 				EE0B23A92BA988070065AE44 /* AppCoordinator.swift in Sources */,
-				EEAEFD5C2B60811500CAEDCA /* AssemblyBuilder.swift in Sources */,
 				EE119BCF2B7664E900288399 /* DatabaseService.swift in Sources */,
 				EEEC83A32B8C903700721510 /* MainAssembly.swift in Sources */,
 				EE0B239D2B9F8FBF0065AE44 /* PublicationDetailPresnter.swift in Sources */,
@@ -575,13 +545,11 @@
 				EED8B23D2B99F35D002D244C /* RegestrationPresenter.swift in Sources */,
 				EE0B23B52BAC466C0065AE44 /* TabBarCoordinator.swift in Sources */,
 				EEEC83A72B8E077F00721510 /* Categories.swift in Sources */,
-				EEAEFDDE2B6D1BDA00CAEDCA /* MainTabBarController.swift in Sources */,
 				EE0B23A12B9F8FF00065AE44 /* PublicationDetailViewController.swift in Sources */,
 				EEC5073D2B51BA75000654B5 /* CustomButon.swift in Sources */,
 				EEC507412B56A875000654B5 /* WebViewerController.swift in Sources */,
 				EEEC83AA2B93467800721510 /* UICollectionViewLayout+Extension.swift in Sources */,
 				EEAEFD5A2B607B3200CAEDCA /* MainViewController.swift in Sources */,
-				EEAEFDAA2B6904BC00CAEDCA /* PublicationCategory.swift in Sources */,
 				EEEC83A12B8C8D3900721510 /* MainSectionsAndItems.swift in Sources */,
 				EE5C14AF2B3343CA004510AE /* SceneDelegate.swift in Sources */,
 				EEAEFD4D2B5FE06A00CAEDCA /* APIManager.swift in Sources */,
