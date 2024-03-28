@@ -99,7 +99,7 @@ class MainViewController: UIViewController {
             case .publications(let publication):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PublicationCollectionViewCell.reuseIdentifier, for: indexPath) as? PublicationCollectionViewCell else { fatalError("Cannot create the cell") }
         
-                cell.configure(with: publication.image!, title: publication.title)
+                cell.configure(with: publication)
                 
                 return cell
             case .category(let category):

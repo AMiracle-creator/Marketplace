@@ -104,7 +104,7 @@ class ProfileViewController: UIViewController {
             case .publications(let publication):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfilePublicationCollectionViewCell.reuseIdentifier, for: indexPath) as? ProfilePublicationCollectionViewCell else { fatalError("Cannot create the cell") }
         
-                cell.configure(with: publication.image!, title: publication.title)
+                cell.configure(with: publication)
                 
                 return cell
             case .loading:

@@ -26,7 +26,7 @@ class ProfilePublicationCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let publicationCostLabel: UILabel = {
+    private let publicationPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "1000"
         label.font = .boldSystemFont(ofSize: 18)
@@ -52,10 +52,10 @@ class ProfilePublicationCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         self.addSubview(imageView)
         self.addSubview(publicationTitleLabel)
-        self.addSubview(publicationCostLabel)
+        self.addSubview(publicationPriceLabel)
         
         publicationTitleLabel.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
-        publicationCostLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        publicationPriceLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         imageView.snp.makeConstraints {
             $0.top.bottom.leading.equalToSuperview()
@@ -69,7 +69,7 @@ class ProfilePublicationCollectionViewCell: UICollectionViewCell {
             $0.top.equalToSuperview().inset(16)
         }
 
-        publicationCostLabel.snp.makeConstraints {
+        publicationPriceLabel.snp.makeConstraints {
             $0.top.equalTo(publicationTitleLabel.snp.bottom)
             $0.leading.equalTo(imageView.snp.trailing).offset(16)
             $0.trailing.equalToSuperview()
@@ -78,9 +78,10 @@ class ProfilePublicationCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Public functions
-    func configure(with image: UIImage, title: String) {
-        imageView.image = image
-        publicationTitleLabel.text = title
+    func configure(with publication: Publication) {
+        imageView.image = publication.image
+        publicationTitleLabel.text = publication.title
+        publicationPriceLabel.text = publication.price + "₽"
     }
 }
 

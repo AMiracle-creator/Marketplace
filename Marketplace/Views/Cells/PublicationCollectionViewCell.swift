@@ -12,7 +12,7 @@ class PublicationCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "PublicationCollectionViewCell"
     
-    // MARK: - UI Components
+    // MARK: UI Components
     private let imageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 5
@@ -23,14 +23,20 @@ class PublicationCollectionViewCell: UICollectionViewCell {
     
     private let publicationTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Title dsfaffsdfsdfsdfsdsdfsdfsdfsdfsd"
+        label.font = .systemFont(ofSize: 16)
         return label
     }()
     
-    private let publicationCostLabel: UILabel = {
+    private let publicationPriceLabel: UILabel = {
         let label = UILabel()
-        label.text = "1000"
         label.font = .boldSystemFont(ofSize: 18)
+        return label
+    }()
+    
+    private let createdTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .gray
         return label
     }()
     
@@ -49,11 +55,12 @@ class PublicationCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI Setup
+    // MARK: UI Setup
     private func setupUI() {
         self.addSubview(imageView)
         self.addSubview(publicationTitleLabel)
-        self.addSubview(publicationCostLabel)
+        self.addSubview(publicationPriceLabel)
+        self.addSubview(createdTimeLabel)
         
         imageView.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
@@ -65,17 +72,26 @@ class PublicationCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(imageView.snp.bottom).offset(UIConstants.defaultInset)
         }
 
-        publicationCostLabel.snp.makeConstraints {
+        publicationPriceLabel.snp.makeConstraints {
             $0.top.equalTo(publicationTitleLabel.snp.bottom).offset(UIConstants.defaultInset)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(4)
+        }
+        
+        createdTimeLabel.snp.makeConstraints {
+            $0.top.equalTo(publicationPriceLabel.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
-    // MARK: - Public functions
-    func configure(with image: UIImage, title: String) {
-        imageView.image = image
-        publicationTitleLabel.text = title
+    // MARK: Public functions
+    func configure(with publication: Publication) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMM, HH:mm"
+        
+        imageView.image = publication.image
+        publicationTitleLabel.text = publication.title
+        publicationPriceLabel.text = publication.price + "₽"
+        createdTimeLabel.text = dateFormatter.string(from: publication.createdAt)
     }
 }
 

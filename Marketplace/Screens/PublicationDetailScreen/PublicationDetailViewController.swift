@@ -195,7 +195,7 @@ extension PublicationDetailViewController: PublicationDetailViewInput {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm E, d MMM y"
         
-        self.priceLabel.text = publication.price
+        self.priceLabel.text = publication.price + "₽"
         self.titleLabel.text = publication.title
         self.usernameLabel.text = publication.userename
         self.descriptionText.text = publication.description
