@@ -160,6 +160,6 @@ extension MainViewController: UICollectionViewDelegate  {
 
 extension MainViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        presenter.filterContent(queryOrNil: searchController.searchBar.text)
+        presenter.filterContent(queryOrNil: searchController.searchBar.text, byCategory: false)
     }
 }

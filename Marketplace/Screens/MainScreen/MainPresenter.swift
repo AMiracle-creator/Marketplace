@@ -14,7 +14,7 @@ protocol MainViewInput: AnyObject {
 protocol MainViewOutput: AnyObject {
     func viewDidLoad()
     func viewDidSelectItem(_ item: ItemMain)
-    func filterContent(queryOrNil: String?)
+    func filterContent(queryOrNil: String?, byCategory: Bool)
     func refreshData()
 }
 
@@ -42,13 +42,13 @@ class MainViewPresenter: MainViewOutput {
         case .publications(let publication):
             coordinator?.openDetail(publication: publication)
         case .category(let category):
-            print("Selected category: \(category.name)")
+            filterContent(queryOrNil: category.name, byCategory: true)
         case .loading, .error:
             break
         }
     }
     
-    func filterContent(queryOrNil: String?) {
+    func filterContent(queryOrNil: String?, byCategory: Bool) {
         guard let query = queryOrNil, !query.isEmpty else {
             self.view?.updateView(with: [.categories(self.categoriesCells), .main(self.publicationsCells)])
             return
@@ -61,12 +61,25 @@ class MainViewPresenter: MainViewOutput {
             return nil
         }
         
-        let filteredPublications = publications.filter { publication in
-            return publication.title.lowercased().contains(query.lowercased())
+        var filteredPublicationsCells = [ItemMain]()
+        
+        switch byCategory {
+        case true:
+            
+            let filteredPublications = publications.filter { publication in
+                return publication.category.lowercased().contains(query.lowercased())
+            }
+            
+            filteredPublicationsCells = filteredPublications.map { ItemMain.publications($0) }
+            
+        case false:
+            
+            let filteredPublications = publications.filter { publication in
+                return publication.title.lowercased().contains(query.lowercased())
+            }
+            
+            filteredPublicationsCells = filteredPublications.map { ItemMain.publications($0) }
         }
-        
-        let filteredPublicationsCells = filteredPublications.map { ItemMain.publications($0) }
-        
         self.view?.updateView(with: [.categories(self.categoriesCells), .main(filteredPublicationsCells)])
         
     }
