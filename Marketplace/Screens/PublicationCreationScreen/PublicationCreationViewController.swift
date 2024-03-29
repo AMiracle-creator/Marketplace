@@ -11,6 +11,8 @@ import SnapKit
 class PublicationCreationViewController: UIViewController {
     
     var presenter: PublicationCreationViewOutput
+    var categories = [Categories]()
+    var selectedRow = 0
     
     // MARK: - UI Components
     private let imageView: UIImageView = {
@@ -25,9 +27,6 @@ class PublicationCreationViewController: UIViewController {
     
     private let titleField = CustomTextField(fieldType: .title)
     private let priceField = CustomTextField(fieldType: .price)
-    
-    let data = ["Вариант 1", "Вариант 2", "Вариант 3"]
-    var selectedRow = 0
     
     private let pickerButton: UIButton = {
         let button = UIButton()
@@ -90,19 +89,20 @@ class PublicationCreationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-            
+        self.presenter.viewDidLoad()
         setupUI()
-
+    }
+    
+    // MARK: - UI Setup
+    private func setupUI() {
+        view.backgroundColor = .systemBackground
+        
         pickerButton.addTarget(self, action: #selector(popUpPicker), for: .touchUpInside)
         addPublicationButton.addTarget(self, action: #selector(didTapAddPublication), for: .touchUpInside)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAddImage))
         imageView.addGestureRecognizer(tapGesture)
-    }
-    
-    // MARK: - UI Setup
-    private func setupUI() {
+        
         view.addSubview(imageView)
         view.addSubview(titleField)
         view.addSubview(descriptionField)
@@ -195,18 +195,18 @@ class PublicationCreationViewController: UIViewController {
         pickerView.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
         pickerView.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
     
-        let alert = UIAlertController(title: "Select Background Colour", message: "", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Выберите категорию товара", message: "", preferredStyle: .actionSheet)
         
         alert.popoverPresentationController?.sourceView = pickerButton
         alert.popoverPresentationController?.sourceRect = pickerButton.bounds
                 
         alert.setValue(vc, forKey: "contentViewController")
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in }))
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { (UIAlertAction) in }))
                 
-        alert.addAction(UIAlertAction(title: "Select", style: .default, handler: { (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Выбрать", style: .default, handler: { (UIAlertAction) in
             self.selectedRow = pickerView.selectedRow(inComponent: 0)
-            let selected = self.data[self.selectedRow]
-            let name = selected
+            let selected = self.categories[self.selectedRow]
+            let name = selected.name
             self.pickerButton.setTitle(name, for: .normal)
             self.pickerButton.setTitleColor(.black, for: .normal)
         }))
@@ -231,6 +231,10 @@ extension PublicationCreationViewController: UIImagePickerControllerDelegate, UI
 }
 
 extension PublicationCreationViewController: PublicationCreationViewInput {
+    func updateView(with categories: [Categories]) {
+        self.categories = categories
+    }
+    
     func updateState() {
         print("Loading...")
     }
@@ -263,7 +267,7 @@ extension PublicationCreationViewController: UITextViewDelegate {
 extension PublicationCreationViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIConstants.screenWidth, height: 30))
-        label.text = data[row]
+        label.text = categories[row].name
         label.sizeToFit()
         return label
     }
@@ -273,7 +277,7 @@ extension PublicationCreationViewController: UIPickerViewDelegate, UIPickerViewD
     }
         
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        data.count
+        categories.count
     }
         
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {

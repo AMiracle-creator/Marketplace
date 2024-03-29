@@ -9,11 +9,13 @@ import Foundation
 
 protocol PublicationCreationViewInput: AnyObject {
     func updateState()
+    func updateView(with categories: [Categories])
     func failure(error: Error)
 }
 
 protocol PublicationCreationViewOutput: AnyObject {
     func createPublicationButtonPressed(publication: Publication, image: Data)
+    func viewDidLoad()
     var marketplaceUser: MarketplaceUser? { get set }
 }
 
@@ -27,6 +29,10 @@ class PublicationCreationPresenter: PublicationCreationViewOutput {
         self.databaseService = databaseService
         self.marketplaceUser = marketplaceUser
         self.coordinator = coordinator
+    }
+    
+    func viewDidLoad() {
+        getCategories()
     }
     
     func createPublicationButtonPressed(publication: Publication, image: Data) {
@@ -43,14 +49,13 @@ class PublicationCreationPresenter: PublicationCreationViewOutput {
         }
     }
     
-    private func getCategoryItems(completion: @escaping(Result<[ItemMain], Error>) -> Void) {
+    private func getCategories() {
         databaseService?.getCategories { result in
             switch result {
             case .success(let categories):
-                let items = categories.map { ItemMain.category($0) }
-                completion(.success(items))
+                self.view?.updateView(with: categories)
             case .failure(let error):
-                completion(.failure(error))
+                print(error.localizedDescription)
             }
         }
     }
