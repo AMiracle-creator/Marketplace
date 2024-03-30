@@ -14,6 +14,15 @@ class PublicationDetailViewController: UIViewController {
     
     // MARK: - UI Components
     
+    private let scrollView: UIScrollView = {
+        let scrolleView = UIScrollView()
+        scrolleView.showsVerticalScrollIndicator = false
+        scrolleView.translatesAutoresizingMaskIntoConstraints = false
+        return scrolleView
+    }()
+    
+    private let conteinerView = UIView()
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -118,18 +127,31 @@ class PublicationDetailViewController: UIViewController {
     private func setupUI() {
         self.view.backgroundColor = .systemBackground
         
-        self.view.addSubview(imageView)
-        self.view.addSubview(priceLabel)
-        self.view.addSubview(titleLabel)
-        self.view.addSubview(descriptionLabel)
-        self.view.addSubview(descriptionText)
-        self.view.addSubview(usernameLabel)
-        self.view.addSubview(createdTimeLabel)
-        self.view.addSubview(ratingLabel)
-        self.view.addSubview(ratingStarsView)
+        self.view.addSubview(scrollView)
+        scrollView.addSubview(conteinerView)
+        
+        conteinerView.addSubview(imageView)
+        conteinerView.addSubview(priceLabel)
+        conteinerView.addSubview(titleLabel)
+        conteinerView.addSubview(descriptionLabel)
+        conteinerView.addSubview(descriptionText)
+        conteinerView.addSubview(usernameLabel)
+        conteinerView.addSubview(createdTimeLabel)
+        conteinerView.addSubview(ratingLabel)
+        conteinerView.addSubview(ratingStarsView)
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        conteinerView.snp.makeConstraints {
+            $0.edges.width.equalToSuperview()
+            $0.height.equalToSuperview().priority(.low)
+        }
         
         imageView.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(UIConstants.imageViewHeight)
         }
