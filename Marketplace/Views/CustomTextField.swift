@@ -16,6 +16,7 @@ class CustomTextField: UITextField {
         case title
         case description
         case price
+        case city
     }
     
     private let authFieldType: CustomTextFieldType
@@ -51,6 +52,9 @@ class CustomTextField: UITextField {
             self.placeholder = "Описание"
         case .price:
             self.placeholder = "Цена"
+            self.keyboardType = .numberPad
+        case .city:
+            self.placeholder = "Город"
         }
     }
     

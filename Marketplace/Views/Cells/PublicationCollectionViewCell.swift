@@ -91,7 +91,7 @@ class PublicationCollectionViewCell: UICollectionViewCell {
         imageView.image = publication.image
         publicationTitleLabel.text = publication.title
         publicationPriceLabel.text = publication.price + "₽"
-        createdTimeLabel.text = dateFormatter.string(from: publication.createdAt)
+        createdTimeLabel.text = "\(publication.city), \(dateFormatter.string(from: publication.createdAt))"
     }
 }
 

@@ -26,7 +26,10 @@ class PublicationCreationViewController: UIViewController {
     }()
     
     private let titleField = CustomTextField(fieldType: .title)
+    
     private let priceField = CustomTextField(fieldType: .price)
+    
+    private let cityField = CustomTextField(fieldType: .city)
     
     private let pickerButton: UIButton = {
         let button = UIButton()
@@ -68,10 +71,10 @@ class PublicationCreationViewController: UIViewController {
         static let smallOffset: CGFloat = 8
         static let mediumOffset: CGFloat = 16
         static let bigOffset: CGFloat = 24
-        static let headerViewHeight: CGFloat = 222
         static let customTextFieldHeight: CGFloat = 55
-        static let secondaryButtonHeight: CGFloat = 44
         static let customTextFieldWidthMultiplier = 0.85
+        static let imageViewHeight: CGFloat = 200
+        static let descriptionFieldHeight: CGFloat = 120
         static let screenWidth = UIScreen.main.bounds.width - 10
         static let screenHeight = UIScreen.main.bounds.height / 2
     }
@@ -95,7 +98,7 @@ class PublicationCreationViewController: UIViewController {
     
     // MARK: - UI Setup
     private func setupUI() {
-        view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .systemBackground
         
         pickerButton.addTarget(self, action: #selector(popUpPicker), for: .touchUpInside)
         addPublicationButton.addTarget(self, action: #selector(didTapAddPublication), for: .touchUpInside)
@@ -103,51 +106,59 @@ class PublicationCreationViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAddImage))
         imageView.addGestureRecognizer(tapGesture)
         
-        view.addSubview(imageView)
-        view.addSubview(titleField)
-        view.addSubview(descriptionField)
-        view.addSubview(priceField)
-        view.addSubview(addPublicationButton)
-        view.addSubview(pickerButton)
+        self.view.addSubview(imageView)
+        self.view.addSubview(titleField)
+        self.view.addSubview(descriptionField)
+        self.view.addSubview(priceField)
+        self.view.addSubview(cityField)
+        self.view.addSubview(addPublicationButton)
+        self.view.addSubview(pickerButton)
         
         descriptionField.delegate = self
         descriptionField.text = placeHolder
         
         imageView.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview().inset(UIConstants.bigOffset)
-            $0.height.equalTo(200)
+            $0.height.equalTo(UIConstants.imageViewHeight)
         }
         
         titleField.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(UIConstants.bigOffset)
+            $0.top.equalTo(imageView.snp.bottom).offset(UIConstants.mediumOffset)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(UIConstants.customTextFieldHeight)
             $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
         }
         
         priceField.snp.makeConstraints {
-            $0.top.equalTo(titleField.snp.bottom).offset(UIConstants.bigOffset)
+            $0.top.equalTo(titleField.snp.bottom).offset(UIConstants.mediumOffset)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(UIConstants.customTextFieldHeight)
             $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
         }
         
         pickerButton.snp.makeConstraints {
-            $0.top.equalTo(priceField.snp.bottom).offset(UIConstants.bigOffset)
+            $0.top.equalTo(priceField.snp.bottom).offset(UIConstants.mediumOffset)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(UIConstants.customTextFieldHeight)
+            $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
+        }
+        
+        cityField.snp.makeConstraints {
+            $0.top.equalTo(pickerButton.snp.bottom).offset(UIConstants.mediumOffset)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(UIConstants.customTextFieldHeight)
             $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
         }
         
         descriptionField.snp.makeConstraints {
-            $0.top.equalTo(pickerButton.snp.bottom).offset(UIConstants.bigOffset)
+            $0.top.equalTo(cityField.snp.bottom).offset(UIConstants.mediumOffset)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(110)
+            $0.height.equalTo(UIConstants.descriptionFieldHeight)
             $0.width.equalTo(priceField.snp.width)
         }
         
         addPublicationButton.snp.makeConstraints {
-            $0.top.equalTo(descriptionField.snp.bottom).offset(UIConstants.bigOffset)
+            $0.top.equalTo(descriptionField.snp.bottom).offset(UIConstants.mediumOffset)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(UIConstants.customTextFieldHeight)
             $0.width.equalToSuperview().multipliedBy(UIConstants.customTextFieldWidthMultiplier)
@@ -177,6 +188,7 @@ class PublicationCreationViewController: UIViewController {
                                       description: descriptionField.text ?? "Не указано",
                                       price: priceField.text ?? "Не указано",
                                       category: pickerButton.titleLabel?.text ?? "Не указано",
+                                      city: cityField.text ?? "Не указано",
                                       createdAt: Date())
         
         presenter.createPublicationButtonPressed(publication: publication, image: imageData)
